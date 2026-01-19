@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Kill any previous midi bridge
+pkill -f 'python3.*midi_zoom.py'
+
+# Start MIDI bridge in background
+python3 ~/.config/ardour8/scripts/midi_zoom.py &
+MIDI_PID=$!
+
+# Start Ardour
+/usr/bin/ardour "$@"
+
+# When Ardour exits, kill the MIDI script
+kill $MIDI_PID 2>/dev/null
