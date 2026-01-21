@@ -1,14 +1,14 @@
-#!/bin/bash
+MIDI_TO_XDOTOOL=$HOME/.config/ardour8/scripts/midi_to_xdotool.py
 
-# Kill any previous midi bridge
-pkill -f 'python3.*midi_zoom.py'
+# Kill any existing midi to xdotool instance
+pkill -f python3\.*$MIDI_TO_XDOTOOL
 
-# Start MIDI bridge in background
-python3 ~/.config/ardour8/scripts/midi_zoom.py &
-MIDI_PID=$!
+# Start midi to xdotool in background
+python3 $MIDI_TO_XDOTOOL &
+MIDI_TO_XDOTOOL_PID=$!
 
-# Start Ardour
+# Start ardour
 /usr/bin/ardour "$@"
 
-# When Ardour exits, kill the MIDI script
-kill $MIDI_PID 2>/dev/null
+# When ardour exits, kill midi to xdotool
+kill $MIDI_TO_XDOTOOL_PID 2>/dev/null
